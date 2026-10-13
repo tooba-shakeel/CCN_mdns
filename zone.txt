@@ -1,0 +1,11 @@
+# name             type   value            ttl(seconds)
+www.neduet.lab     A      10.0.0.5         60
+cis.neduet.lab     A      10.0.0.7         60
+mail.neduet.lab    MX     10.0.0.9         120
+web.neduet.lab     CNAME  www.neduet.lab   60
+
+# test records for the experiments
+fast.neduet.lab    A      10.0.0.21        5
+slow.neduet.lab    A      10.0.0.22        300
+nocache.neduet.lab A      10.0.0.23        0
+a-very-long-host-name-for-testing-message-size.department-of-computer-and-information-systems.neduet.lab A 10.0.0.24 60
