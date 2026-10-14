@@ -8,7 +8,7 @@ import socket
 import random
 import time
 
-PORT = 5400            # auth server port (use 5300 later to test the resolver)
+PORT = 5400            # auth server port 
 
 
 def build(msg_type, headers):
@@ -22,20 +22,20 @@ def parse(data):
     return lines[0], headers
 
 
-server_ip = input("Laptop ka IP likho (jaise 192.168.43.20): ").strip()
+server_ip = input("Enter the server's IP (e.g. 192.168.43.20): ").strip()
 server = (server_ip, PORT)
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 sock.settimeout(4.0)
 
-# Show this phone's own IP (needed for the report's IP table)
+# Show this phone's own IP 
 sock.connect(server)
-print("Is phone ka IP:", sock.getsockname()[0])
+print("This device's IP:", sock.getsockname()[0])
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)   # fresh unconnected socket
 sock.settimeout(4.0)
 
-print("\nNaam likho (jaise www.neduet.lab). Type badalna ho to: mail.neduet.lab MX")
-print("Khaali Enter = band karo, 'ping' = round-trip time\n")
+print("\nType a name to look up (e.g. www.neduet.lab). To ask for another type: mail.neduet.lab MX")
+print("Empty Enter = quit, 'ping' = round-trip time\n")
 
 while True:
     text = input("> ").strip()
@@ -55,8 +55,8 @@ while True:
     sock.sendto(msg, server)
     try:
         data, addr = sock.recvfrom(2048)
-    except socket.timeout:
-        print("  Koi jawab nahi aaya (4 s). Check karo: IP sahi hai? server chal raha hai? firewall?\n")
+    except (socket.timeout, ConnectionResetError):   # Windows reports "port closed" as ConnectionResetError
+        print("  No reply within 4 s. Check: is the IP correct? Is the server running? Firewall?\n")
         continue
     ms = (time.perf_counter() - start) * 1000
 
