@@ -4,17 +4,17 @@ A small DNS system with our own text-based application layer protocol (MDNS/1.0)
 
 ## Deployment
 
-- **Phone 1** (also the Wi-Fi hotspot): authoritative server, runs auth_server.py on UDP port 5400
+- **Phone 1** (also the Wi-Fi hotspot): authoritative server, runs auth_server.py on UDP port 5400.
 - **Laptop** (also runs Wireshark): caching resolver, runs resolver.py on UDP port 5300
-- **Phone 2**: client, runs client.py on any free port
+- **Phone 2**: client, runs client.py on any free port.
 
 Query path: client → resolver → authoritative server (only on a cache miss).
 
 ## Files
 
-- **common.py**: Member 1 (CS-018), every device, done and tested
-- **zone.txt**: Member 1 (CS-018), Phone 1, done and tested
-- **auth_server.py**: Member 1 (CS-018), Phone 1, done and tested
+- **common.py**: Member 1 , every device, done and tested.
+- **zone.txt**: Member 1 , Phone 1, done and tested
+- **auth_server.py**: Member 1 , Phone 1, done and tested
 - **resolver.py**: Member 2, Laptop, to do
 - **client.py**: Member 3, Phone 2, to do
 - **measure.py, plot.py**: Member 4, Laptop / Phone 2, to do
