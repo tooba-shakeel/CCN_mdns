@@ -28,7 +28,7 @@ def build(msg_type, headers):
 def parse(data):
     """
     Turn received bytes back into (msg_type, headers).
-    Raises ValueError for anything that breaks the format rules then caller replies 400.
+    Raises ValueError for anything that breaks the format rules, then caller replies 400.
     """
     if len(data) > MAX_SIZE:
         raise ValueError("message too long")
@@ -53,7 +53,7 @@ def parse(data):
     return msg_type, headers
 
 def require(headers, *fields):
-    #Raise ValueError if any required field is missing then caller replies 400.
+    #Raise ValueError if any required field is missing, then caller replies 400.
     missing = [f for f in fields if f not in headers]
     if missing:
         raise ValueError(f"missing field(s): {', '.join(missing)}")
