@@ -65,7 +65,11 @@ def main():
     log(ROLE, f"loaded {len(zone)} records, listening on UDP {AUTH_PORT}")
 
     while True:
-        data, addr = sock.recvfrom(2048)
+        try:
+            data, addr = sock.recvfrom(65535)    # largest possible UDP datagram, so nothing is cut off
+        except OSError as e:                      # e.g. Windows reports an earlier reply as undeliverable
+            log(ROLE, f"receive error ignored: {e}")
+            continue
         reply = handle(data, zone)
         sock.sendto(reply, addr)
 if __name__ == "__main__":
