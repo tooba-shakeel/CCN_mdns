@@ -4,20 +4,28 @@ A small DNS system with our own text-based application layer protocol (MDNS/1.0)
 
 ## Deployment
 
-- **Phone 1** (also the Wi-Fi hotspot): authoritative server, runs auth_server.py on UDP port 5400.
+- **Phone 1** (also the Wi-Fi hotspot): authoritative server, runs auth_server.py on UDP port 5400
 - **Laptop** (also runs Wireshark): caching resolver, runs resolver.py on UDP port 5300
-- **Phone 2**: client, runs client.py on any free port.
+- **Phone 2**: client, runs client.py on any free port
 
 Query path: client → resolver → authoritative server (only on a cache miss).
 
+## Team (3 members)
+
+- **Member 1 (CS-018):** message format, authoritative server, zone file (Phone 1); report: Introduction, Protocol specification (R1), Implementation (R2), design tension 7.1
+- **Member 2 (CS-020):** caching resolver, laptop setup, Wireshark; report: Deployment (R3), Packet capture (R5), Sustainability, design tension 7.2
+- **Member 3 (CS-302):** client with retry (Phone 2), failure tests, measurement and plotting scripts; report: Transport choice (R4), Performance (R6), Behaviour under failure (R7), design tension 7.3
+
 ## Files
 
-- **common.py**: Member 1 , every device, done and tested.
-- **zone.txt**: Member 1 , Phone 1, done and tested
-- **auth_server.py**: Member 1 , Phone 1, done and tested
-- **resolver.py**: Member 2, Laptop, to do
-- **client.py**: Member 3, Phone 2, to do
-- **measure.py, plot.py**: Member 4, Laptop / Phone 2, to do
+- **common.py**: Member 1 (CS-018), every device, done and tested
+- **zone.txt**: Member 1 (CS-018), Phone 1, done and tested
+- **auth_server.py**: Member 1 (CS-018), Phone 1, done and tested
+- **phone_test.py**: Member 1 (CS-018), any phone or laptop (test tool), done and tested
+- **binary_size.py**: Member 1 (CS-018), laptop, text vs binary size for design tension 7.1, done and tested
+- **resolver.py**: Member 2 (CS-020), Laptop, to do
+- **client.py**: Member 3 (CS-302), Phone 2, to do
+- **measure.py, plot.py**: Member 3 (CS-302), Laptop / Phone 2, to do
 
 ## Fixed protocol values
 - **Transport:** UDP, one message per datagram, max 1024 bytes
