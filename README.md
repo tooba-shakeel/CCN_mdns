@@ -23,7 +23,7 @@ Query path: client → resolver → authoritative server (only on a cache miss).
 - **auth_server.py**: Member 1 (CS-018), Phone 1, done and tested
 - **phone_test.py**: Member 1 (CS-018), any phone or laptop (test tool), done and tested
 - **binary_size.py**: Member 1 (CS-018), laptop, text vs binary size for design tension 7.1, done and tested
-- **resolver.py**: Member 2 (CS-020), Laptop, to do
+- **resolver.py**: Member 2 (CS-020), Laptop, done and tested
 - **client.py**: Member 3 (CS-302), Phone 2, to do
 - **measure.py, plot.py**: Member 3 (CS-302), Laptop / Phone 2, to do
 
