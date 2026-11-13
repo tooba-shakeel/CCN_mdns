@@ -1,6 +1,5 @@
 """
-auth_server.py - MDNS/1.0 authoritative name server (Host A).
-
+auth_server.py - MDNS/1.0 authoritative name server (Host A). Member (CS-018)
 Run:  python auth_server.py
 Listens on UDP 5400 and answers QUERY / PING from the resolver using zone.txt.
 """
@@ -10,7 +9,7 @@ from common import build, parse, require, log, RECORD_TYPES, AUTH_PORT, HERE
 
 ROLE = "AUTH"
 def load_zone(path=os.path.join(HERE, "zone.txt")):
-    #Read zone.txt into {(name, rtype): (value, ttl)}. Lines starting with # are comments.
+    #Read zone.txt into {(name, rtype): (value, ttl)}.
     zone = {}
     with open(path) as f:
         for line in f:
