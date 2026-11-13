@@ -1,8 +1,5 @@
 """
 phone_test.py - send MDNS/1.0 queries from the phone (Pydroid 3) to the laptop.
-
-Standalone: needs no other file, so you can copy just this one to the phone.
-Run it, type the laptop's IP, then type names to look up (empty line = quit).
 """
 import socket
 import random
