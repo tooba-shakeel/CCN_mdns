@@ -6,11 +6,9 @@ A small DNS system with our own text-based application layer protocol (MDNS/1.0)
 
 All three devices are connected by Wi-Fi to the same access point (home router, subnet 192.168.18.0/24, gateway 192.168.18.1).
 
-| Host | Device | Role | Program | IP address | Port |
-|---|---|---|---|---|---|
-| A | Phone 1 (Android, Pydroid 3) | Authoritative server | auth_server.py, zone.txt | 192.168.18.2 | UDP 5400 |
-| B | Laptop (Windows 11, Python 3.11) | Caching resolver, Wireshark | resolver.py | 192.168.18.6 | UDP 5300 |
-| C | Phone 2 (Android, Pydroid 3) | Client and test scripts | client.py and the test scripts | 192.168.18.3 | temporary port chosen by the OS |
+- **Host A – Phone 1** (Android, Pydroid 3): authoritative server, runs auth_server.py and zone.txt, IP 192.168.18.2, UDP port 5400
+- **Host B – Laptop** (Windows 11, Python 3.11): caching resolver and Wireshark, runs resolver.py, IP 192.168.18.6, UDP port 5300
+- **Host C – Phone 2** (Android, Pydroid 3): client, runs client.py and the test scripts, IP 192.168.18.3, temporary port chosen by the OS
 
 Query path: client → resolver → authoritative server (only on a cache miss). On a cache hit the resolver answers from its cache and the authoritative server is not contacted.
 
@@ -24,20 +22,18 @@ The IP addresses are given out by the router and can change on another day. Chec
 
 ## Files
 
-| File | Author | Runs on | Purpose |
-|---|---|---|---|
-| common.py | CS-018 | every device | build(), parse(), require(), log() and the fixed protocol values |
-| zone.txt | CS-018 | Phone 1 | the 8 zone records |
-| auth_server.py | CS-018 | Phone 1 | authoritative server on UDP 5400 |
-| phone_test.py | CS-018 | any device | small tool to query the auth server directly |
-| binary_size.py | CS-018 | laptop | text vs binary message size (report Table 9, Section 7.1) |
-| resolver.py | CS-020 | laptop | caching resolver on UDP 5300 |
-| ttl_test.py | CS-020 | laptop | TTL experiment (report Table 10, Section 7.2) |
-| client.py | CS-302 | Phone 2 | client: interactive or one-shot queries, PING, FLUSH, retry |
-| measure.py | CS-302 | Phone 2 | 20 repetitions of ping, cache miss, cache hit and TTL 0 lookups → results.csv (Table 8) |
-| workload.py | CS-302 | Phone 2 | throughput and cache hit rate → workload_results.csv, workload_summary.txt (Sections 6 and 8) |
-| failure_tests.py | CS-302 | Phone 2 | guided failure tests → failure_results.txt (Table 11, Section 9) |
-| plot.py | CS-302 | laptop | graphs from results.csv (Figure 7) |
+- **common.py** (CS-018, every device): build(), parse(), require(), log() and the fixed protocol values
+- **zone.txt** (CS-018, Phone 1): the 8 zone records
+- **auth_server.py** (CS-018, Phone 1): authoritative server on UDP 5400
+- **phone_test.py** (CS-018, any device): small tool to query the auth server directly
+- **binary_size.py** (CS-018, laptop): text vs binary message size (report Table 9, Section 7.1)
+- **resolver.py** (CS-020, laptop): caching resolver on UDP 5300
+- **ttl_test.py** (CS-020, laptop): TTL experiment (report Table 10, Section 7.2)
+- **client.py** (CS-302, Phone 2): client: interactive or one-shot queries, PING, FLUSH, retry
+- **measure.py** (CS-302, Phone 2): 20 repetitions of ping, cache miss, cache hit and TTL 0 lookups → results.csv (Table 8)
+- **workload.py** (CS-302, Phone 2): throughput and cache hit rate → workload_results.csv, workload_summary.txt (Sections 6 and 8)
+- **failure_tests.py** (CS-302, Phone 2): guided failure tests → failure_results.txt (Table 11, Section 9)
+- **plot.py** (CS-302, laptop): graphs from results.csv (Figure 7)
 
 All files are done and tested on the three devices.
 
@@ -68,16 +64,14 @@ RTYPE: A
 
 Each line is: name, type, value, TTL in seconds. Lines starting with # are comments. Restart auth_server.py after editing the file.
 
-| Name | Type | Value | TTL | Used for |
-|---|---|---|---|---|
-| www.neduet.lab | A | 10.0.0.5 | 60 | main test name |
-| cis.neduet.lab | A | 10.0.0.7 | 60 | second A record |
-| mail.neduet.lab | MX | 10.0.0.9 | 120 | MX record |
-| web.neduet.lab | CNAME | www.neduet.lab | 60 | alias |
-| fast.neduet.lab | A | 10.0.0.21 | 5 | TTL experiment (expires quickly) |
-| slow.neduet.lab | A | 10.0.0.22 | 300 | TTL experiment (stays cached) |
-| nocache.neduet.lab | A | 10.0.0.23 | 0 | must never be cached (always a miss) |
-| a-very-long-host-name-…neduet.lab | A | 10.0.0.24 | 60 | large message size test |
+- **www.neduet.lab** (A): 10.0.0.5, TTL 60, main test name
+- **cis.neduet.lab** (A): 10.0.0.7, TTL 60, second A record
+- **mail.neduet.lab** (MX): 10.0.0.9, TTL 120, MX record
+- **web.neduet.lab** (CNAME): www.neduet.lab, TTL 60, alias
+- **fast.neduet.lab** (A): 10.0.0.21, TTL 5, TTL experiment (expires quickly)
+- **slow.neduet.lab** (A): 10.0.0.22, TTL 300, TTL experiment (stays cached)
+- **nocache.neduet.lab** (A): 10.0.0.23, TTL 0, must never be cached (always a miss)
+- **a-very-long-host-name-…neduet.lab** (A): 10.0.0.24, TTL 60, large message size test
 
 Any name not in the list (for example xyz.neduet.lab) returns 404.
 
@@ -112,14 +106,12 @@ On Windows, set the Wi-Fi network to **Private** and allow Python through the fi
 
 ## Experiments (as used in the report)
 
-| Report | Command | Output |
-|---|---|---|
-| R6, Table 8, Figure 7 | Phone 2: `measure.py` then laptop: `py plot.py` | results.csv, hit_vs_miss.png, summary.png |
-| R6 throughput, Section 8 hit rate | Phone 2: `workload.py` | workload_results.csv, workload_summary.txt |
-| 7.1, Table 9 | laptop: `py binary_size.py` | sizes printed on screen |
-| 7.2, Table 10 | laptop: `py ttl_test.py 192.168.18.6 fast.neduet.lab 2 120` (and `slow.neduet.lab`) | printed on screen |
-| R7, Table 11 | Phone 2: `failure_tests.py`, then stop and start the servers when it asks | failure_results.txt |
-| R5, Figures 5 and 9 | Wireshark on the laptop's Wi-Fi interface, filter `udp.port == 5300 \|\| udp.port == 5400` | main_experiment.pcapng, experiment_failure.pcapng |
+- **R6, Table 8, Figure 7:** Phone 2: `measure.py`, then laptop: `py plot.py` → results.csv, hit_vs_miss.png, summary.png
+- **R6 throughput, Section 8 hit rate:** Phone 2: `workload.py` → workload_results.csv, workload_summary.txt
+- **Section 7.1, Table 9:** laptop: `py binary_size.py` → sizes printed on screen
+- **Section 7.2, Table 10:** laptop: `py ttl_test.py 192.168.18.6 fast.neduet.lab 2 120` (and the same for slow.neduet.lab) → printed on screen
+- **R7, Table 11:** Phone 2: `failure_tests.py`, then stop and start the servers when it asks → failure_results.txt
+- **R5, Figures 5 and 9:** Wireshark on the laptop's Wi-Fi interface with the filter `udp.port == 5300 || udp.port == 5400` → main_experiment.pcapng, experiment_failure.pcapng
 
 ## Quick test of the auth server
 
@@ -135,4 +127,4 @@ On Windows, set the Wi-Fi network to **Private** and allow Python through the fi
 
 ## AI assistance
 
-Claude AI (Anthropic) was used to help diagnose bugs in the programs and test scripts, explain error messages and Wireshark output, and check the wording of the report. The declaration is in Appendix A of the report.
+Claude AI was used to help diagnose bugs in the programs and test scripts, explain error messages and Wireshark output. The declaration is in Appendix A of the report.
